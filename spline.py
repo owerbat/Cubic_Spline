@@ -1,5 +1,6 @@
 import numpy as np
 from polynom import Polynom
+from matplotlib import pyplot as plt
 
 
 class Spline:
@@ -33,7 +34,7 @@ class Spline:
         self.h = np.zeros(self.n)
         for i in range(self.n):
             self.h[i] = (self.dots[i+1][0] - self.dots[i][0])
-        print(self.h)
+        self.polynomials = []
 
     def get_polynomials(self):
         M = np.zeros((self.n-1, self.n-1))
@@ -66,7 +67,20 @@ class Spline:
         self.b[self.n-1] = (self.dots[self.n][1] - self.dots[self.n-1][1]) / self.h[self.n-1] - \
                            self.h[self.n-1] / 3.0 * 2.0 * self.c[self.n-1]
 
-        polynomials = []
+        self.polynomials = []
         for i in range(self.n):
-            polynomials.append(Polynom(self.a[i], self.b[i], self.c[i], self.d[i], self.dots[i][0]))
-        return polynomials
+            self.polynomials.append(Polynom(self.a[i], self.b[i], self.c[i], self.d[i], self.dots[i][0]))
+
+    def get_plot(self):
+        plt.figure()
+        lag = 0.1
+        x_range = []
+        y_range = []
+        for i in range(self.n):
+            x_range.append(np.arange(self.dots[i][0], self.dots[i+1][0] + lag, lag))
+            y_range.append(np.array([self.polynomials[i].calculate(el) for el in x_range[i]]))
+            plt.plot(x_range[i], y_range[i])
+            plt.scatter(self.dots[i][0], self.dots[i][1], color='r')
+        plt.scatter(self.dots[self.n][0], self.dots[self.n][1], color='r')
+        plt.grid(True)
+        plt.show()
