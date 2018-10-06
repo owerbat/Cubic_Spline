@@ -68,5 +68,5 @@ class Spline:
 
         polynomials = []
         for i in range(self.n):
-            polynomials.append(Polynom(self.a[i], self.b[i], self.c[i], self.d[i]))
+            polynomials.append(Polynom(self.a[i], self.b[i], self.c[i], self.d[i], self.dots[i][0]))
         return polynomials
