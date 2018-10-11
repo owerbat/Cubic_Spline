@@ -8,7 +8,7 @@ class Spline:
         try:
             file = open(file_name, 'r', encoding='utf-8')
         except FileNotFoundError:
-            print("File is nor founded")
+            print("Dots file is nor founded")
             exit(2)
 
         self.dots = []
