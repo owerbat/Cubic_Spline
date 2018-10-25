@@ -17,6 +17,7 @@ class Spline:
             if len(dot) == 0:
                 break
             self.dots.append(dot.split(' '))
+        self.dots.sort()
         self.dots_count = len(self.dots)
         self.n = self.dots_count - 1
         file.close()

@@ -20,4 +20,5 @@ def main():
     spline.get_plot()
 
 
-main()
+if __name__ == "__main__":
+    main()
