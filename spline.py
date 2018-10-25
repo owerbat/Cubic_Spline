@@ -73,7 +73,7 @@ class Spline:
 
     def get_plot(self):
         plt.figure()
-        lag = 0.1
+        lag = 0.01
         x_range = []
         y_range = []
         for i in range(self.n):
