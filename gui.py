@@ -1,6 +1,7 @@
 from tkinter import *
 import console
 from tkinter import messagebox
+from random import randint
 
 
 def x_check(x, number, x_entries):
@@ -55,7 +56,21 @@ class Application(Frame):
         self.spline_button.grid(row=8, column=3)
 
     def randomize(self):
-        pass
+        numbers = []
+        for i in range(8):
+            self.x_entries[i].delete(0, END)
+            self.y_entries[i].delete(0, END)
+            x_rand = str(randint(-20, 20))
+            y_rand = str(randint(-20, 20))
+            self.x_entries[i].insert(0, x_rand)
+            self.y_entries[i].insert(0, y_rand)
+            numbers.append(x_rand)
+
+        for i in range(8):
+            if not x_check(self.x_entries[i].get(), i, self.x_entries):
+                while self.x_entries[i].get() in numbers:
+                    self.x_entries[i].delete(0, END)
+                    self.x_entries[i].insert(0, str(randint(-20, 20)))
 
     def solve(self):
         try:
