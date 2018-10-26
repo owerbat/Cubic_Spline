@@ -55,9 +55,29 @@ class Application(Frame):
         self.spline_button = Button(self, text='Get spline', command=self.solve)
         self.spline_button.grid(row=8, column=3)
 
+        self.number_label = Label(self, text='Number of dots')
+        self.number_label.grid(row=9, column=1)
+
+        self.number_entry = Entry(self)
+        self.number_entry.grid(row=9, column=3)
+        self.number_entry.insert(0, '8')
+
     def randomize(self):
+        try:
+            size = int(self.number_entry.get())
+        except ValueError:
+            messagebox.showinfo('Error', 'Number of dots must be a number from range (4, 5, 6, 7, 8)')
+
+        if size not in (4, 5, 6, 7, 8):
+            messagebox.showinfo('Error', 'Number of dots must be a number from range (4, 5, 6, 7, 8)')
+            raise ValueError
+
+        for i in range(size, 8):
+            self.x_entries[i].delete(0, END)
+            self.y_entries[i].delete(0, END)
+
         numbers = []
-        for i in range(8):
+        for i in range(size):
             self.x_entries[i].delete(0, END)
             self.y_entries[i].delete(0, END)
             x_rand = str(randint(-20, 20))
@@ -66,7 +86,7 @@ class Application(Frame):
             self.y_entries[i].insert(0, y_rand)
             numbers.append(x_rand)
 
-        for i in range(8):
+        for i in range(size):
             if not x_check(self.x_entries[i].get(), i, self.x_entries):
                 while self.x_entries[i].get() in numbers:
                     self.x_entries[i].delete(0, END)
