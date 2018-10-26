@@ -81,6 +81,6 @@ class Application(Frame):
 
 root = Tk()
 root.title("Cubic Spline")
-root.geometry("600x600")
+root.geometry("300x300")
 app = Application(root)
 root.mainloop()

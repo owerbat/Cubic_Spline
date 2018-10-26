@@ -17,7 +17,6 @@ class Spline:
             if len(dot) == 0:
                 break
             self.dots.append(dot.split(' '))
-        self.dots.sort()
         self.dots_count = len(self.dots)
         self.n = self.dots_count - 1
         file.close()
@@ -27,6 +26,9 @@ class Spline:
                 exit(3)
             dot[0] = float(dot[0])
             dot[1] = float(dot[1])
+        print('before sort:', self.dots)
+        self.dots.sort()
+        print('after sort:', self.dots)
 
         self.a = np.zeros(self.n)
         self.b = np.zeros(self.n)
