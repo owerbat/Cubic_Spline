@@ -26,9 +26,7 @@ class Spline:
                 exit(3)
             dot[0] = float(dot[0])
             dot[1] = float(dot[1])
-        print('before sort:', self.dots)
         self.dots.sort()
-        print('after sort:', self.dots)
 
         self.a = np.zeros(self.n)
         self.b = np.zeros(self.n)
