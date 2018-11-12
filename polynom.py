@@ -1,3 +1,15 @@
+from numpy import sign as npsign
+
+
+def sign(value):
+    if value < 0:
+        return '-'
+    elif value > 0:
+        return '+'
+    else:
+        return ''
+
+
 class Polynom:
     def __init__(self, a=0, b=0, c=0, d=0, delta_x=0):
         self.a = a
@@ -10,44 +22,22 @@ class Polynom:
         return self.a + self.b*(value-self.delta_x) + self.c*(value-self.delta_x)**2 + self.d*(value-self.delta_x)**3
 
     def __str__(self):
-        if self.delta_x == 0:
-            return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + 'x + ' + \
-                   str(round(self.c, 3)) + 'x^2 + ' + str(round(self.d, 3)) + 'x^3'
+        coefs = (self.a, self.b, self.c, self.d)
+        result = ''
 
-        elif self.delta_x > 0:
-            if self.a == 0:
-                return str(round(self.b, 3)) + '(x-' + str(round(self.delta_x, 3)) + ') + ' + \
-                       str(round(self.c, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^2 + ' +\
-                       str(round(self.d, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^3'
-            elif self.b == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.c, 3)) + '(x-' + str(round(self.delta_x, 3)) +\
-                       ')^2 + ' + str(round(self.d, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^3'
-            elif self.c == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x-' + str(round(self.delta_x, 3)) +\
-                       ') + ' + str(round(self.d, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^3'
-            elif self.d == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x-' + str(round(self.delta_x, 3)) +\
-                       ') + ' + str(round(self.c, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^2'
-            else:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x-' + str(round(self.delta_x, 3)) + \
-                       ') + ' + str(round(self.c, 3)) + '(x-' + str(round(self.delta_x, 3)) +\
-                       ')^2 + ' + str(round(self.d, 3)) + '(x-' + str(round(self.delta_x, 3)) + ')^3'
-
-        elif self.delta_x < 0:
-            if self.a == 0:
-                return str(round(self.b, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ') + ' + \
-                       str(round(self.c, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^2 + ' +\
-                       str(round(self.d, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^3'
-            elif self.b == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.c, 3)) + '(x+' + str(round(-self.delta_x, 3)) +\
-                       ')^2 + ' + str(round(self.d, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^3'
-            elif self.c == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x+' + str(round(-self.delta_x, 3)) +\
-                       ') + ' + str(round(self.d, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^3'
-            elif self.d == 0:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x+' + str(round(-self.delta_x, 3)) +\
-                       ') + ' + str(round(self.c, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^2'
-            else:
-                return str(round(self.a, 3)) + ' + ' + str(round(self.b, 3)) + '(x+' + str(round(-self.delta_x, 3)) + \
-                       ') + ' + str(round(self.c, 3)) + '(x+' + str(round(-self.delta_x, 3)) +\
-                       ')^2 + ' + str(round(self.d, 3)) + '(x+' + str(round(-self.delta_x, 3)) + ')^3'
+        for i in range(4):
+            if coefs[i] != 0:
+                result += sign(coefs[i]) + ' ' + str(abs(round(coefs[i], 3)))
+                if i == 0:
+                    result += ' '
+                elif i == 1:
+                    if self.delta_x != 0:
+                        result += '(x' + sign(-1 * npsign(self.delta_x)) + str(abs(self.delta_x)) + ') '
+                    else:
+                        result += 'x '
+                else:
+                    if self.delta_x != 0:
+                        result += '(x' + sign(-1 * npsign(self.delta_x)) + str(abs(self.delta_x)) + ')^' + str(i) + ' '
+                    else:
+                        result += 'x^' + str(i) + ' '
+        return result

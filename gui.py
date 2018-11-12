@@ -60,7 +60,7 @@ class Application(Frame):
 
         self.number_entry = Entry(self)
         self.number_entry.grid(row=9, column=3)
-        self.number_entry.insert(0, '8')
+        self.number_entry.insert(0, '4')
 
     def randomize(self):
         try:
