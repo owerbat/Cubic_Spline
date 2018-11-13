@@ -1,6 +1,7 @@
 import numpy as np
 from polynom import Polynom
 from matplotlib import pyplot as plt
+from math import floor, log10
 
 
 class Spline:
@@ -73,8 +74,15 @@ class Spline:
             self.polynomials.append(Polynom(self.a[i], self.b[i], self.c[i], self.d[i], self.dots[i][0]))
 
     def get_plot(self):
+        m = self.dots[1][0] - self.dots[0][0]
+        for i in range(2, self.dots_count):
+            dx = self.dots[i][0] - self.dots[i-1][0]
+            if dx < m:
+                m = dx
+        lag = 10**(floor(log10(m))-2)
+        print('lag =', lag)
+
         plt.figure()
-        lag = 0.01
         x_range = []
         y_range = []
         for i in range(self.n):
